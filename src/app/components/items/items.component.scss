@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+mat-card > div:nth-child(2) {
+  display: flex;
+}
+
+mat-card > div:nth-child(2) > mat-card-content:nth-child(1) > p:nth-child(1) {
+  width: 90%;
+}
+
+mat-card > div:nth-child(2) > mat-card-content:nth-child(1) {
+  width: 90%;
+}
+
+mat-card > div:nth-child(2) > mat-card-actions:nth-child(2) {
+  display: flex;
+}
+
+mat-card.mat-card {
+  width: 70%;
+  margin: 3px;
+}
+
+mat-card.mat-card {
+  background-color: #161d23;
+  color: #ffffff;
+}
+
+.mat-raised-button {
+  background-color: #e4be29;
+}
+
+.title {
+  color: #ffffff;
+}
+
+.content > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: 28px;
+}
+
+.content > div:nth-child(1) > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+}
+.content > div:nth-child(1) > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  align-content: center;
+  align-items: center;
+}
+
+.content > div:nth-child(1) > div:nth-child(1) > p:nth-child(1) {
+  margin: 10px;
+}
+
+.mat-form-field {
+  font-size: 10px;
+}

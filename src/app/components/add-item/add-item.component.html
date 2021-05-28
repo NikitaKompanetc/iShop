@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Pick Entry</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="flexContainer">
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite animal</mat-label>
+        <mat-select formControlName="categories" required>
+          <mat-option>--</mat-option>
+          <mat-option  *ngFor="let categories of Categories" [value]="categories.id">
+            {{ categories.id }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="thirtyPercent">
+        <mat-label>Enter title name</mat-label>
+        <input
+          formControlName="title"
+          matInput
+          placeholder="Entry"
+          autocomplete="off"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="thirtyPercent">
+        <mat-label>Enter description</mat-label>
+        <input
+          formControlName="description"
+          matInput
+          placeholder="Exit"
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="onNoClick()">No Thanks</button>
+      <button (click)="addItem()" mat-raised-button>Submit</button>
+    </div>
+  </form>
+</div>

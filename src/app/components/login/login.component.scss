@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  height: 500px;
+  display: flex;
+}
+
+.mat-card {
+  background: #1b2229;
+}
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  button {
+    margin: 3px;
+  }
+}
+.mat-card-header {
+  text-align: ce;
+  display: flex;
+  justify-content: center;
+}
+button.mat-focus-indicator {
+  width: 100%;
+  background-color: #e4be29;
+}
+.mat-card {
+  padding: 40px;
+}
+.main-wrapper > h1:nth-child(1) {
+  color: #e4be29;
+
+}

@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Update item</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="flexContainer">
+      <mat-form-field appearance="outline" class="thirtyPercent">
+        <mat-label>Enter title name</mat-label>
+        <input
+          formControlName="title"
+          matInput
+          placeholder="Entry"
+          autocomplete="off"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="thirtyPercent">
+        <mat-label>Enter description</mat-label>
+        <input
+          formControlName="description"
+          matInput
+          placeholder="Exit"
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="onNoClick()">No Thanks</button>
+      <button (click)="updateItem()" mat-raised-button>Submit</button>
+    </div>
+  </form>
+</div>

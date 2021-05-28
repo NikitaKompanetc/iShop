@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  height: 30px;
+}
+
+mat-form-field.mat-form-field {
+  margin: 0 30px;
+}
+
+.mat-dialog-content {
+  margin: 10px;
+  overflow: clip;
+}
+form.ng-pristine > div {
+  font-size: 0.7rem;
+}
+
+::ng-deep.mat-dialog-container {
+  background-color: #11181f;
+  color: #ffff;
+}
+
+::ng-deep.mat-select-panel {
+  background-color: #11181f;
+}

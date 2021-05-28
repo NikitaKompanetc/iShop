@@ -1,0 +1,10 @@
+<mat-toolbar color="primary" class="header">
+  <div><h1>iShop</h1> <p *ngIf="">Shopping list</p></div>
+  <span *ngIf="isLoggedIn" class="nav-tool-items" (click)="logout()">logout<mat-icon>exit_to_app</mat-icon></span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

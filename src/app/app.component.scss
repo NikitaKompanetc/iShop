@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+}
+.mat-drawer-container {
+  background-color: #11181f;
+  height: 100vh;
+}
+
+.mat-toolbar {
+  background-color: #1b2229;
+}
+.nav-tool-items {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  mat-icon {
+    margin: 5px;
+  }
+}
+.mat-toolbar > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.mat-toolbar > div:nth-child(1) > h1:nth-child(1) {
+  margin: 10px;
+}
+.mat-toolbar > div:nth-child(1) > p:nth-child(2) {
+  font-size: 13px;
+}
+.mat-toolbar > div:nth-child(1) {
+  width: 23%;
+}
+
+span {
+  cursor: pointer;
+}
