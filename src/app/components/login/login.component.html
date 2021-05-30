@@ -6,11 +6,17 @@
     </mat-card-header>
     <form [formGroup]="form">
       <mat-card-content>
+        <div *ngIf="form.controls['email'].hasError('notUnique')">
+          The email address is already in use
+        </div>
         <mat-form-field appearance="outline">
           <mat-label>Enter your username</mat-label>
           <input type="email" matInput formControlName="email" />
         </mat-form-field>
 
+        <div *ngIf="form.controls['password'].hasError('incorrect')">
+          The password is invalid
+        </div>
         <mat-form-field appearance="outline">
           <mat-label>Enter your password</mat-label>
           <input matInput type="password" formControlName="password" />

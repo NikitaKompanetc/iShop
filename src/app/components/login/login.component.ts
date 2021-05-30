@@ -16,17 +16,31 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.localStorage.clear();
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.min(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  loginGoogle() {
+  loginGoogle(): void {
     this.loginService.googleLogin();
   }
 
-  login(email, password): void {
-    this.loginService.login(email, password);
+  login(email: string, password: string) {
+    this.loginService.login(email, password)
+      .catch(err => {
+        if (err.code === 'auth/wrong-password') {
+          this.form.controls['password'].setErrors({'incorrect': true})
+        }
+        if (err.code === 'auth/email-already-in-use')  {
+          this.form.controls['email'].setErrors({'notUnique': true})
+        }
+      });
   }
+
+  validatePassword() {
+  }
+
+  
 }

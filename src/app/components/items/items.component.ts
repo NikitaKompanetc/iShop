@@ -31,17 +31,25 @@ export class ItemsComponent implements OnInit, OnChanges {
   message = '';
   currentItemId;
   categoryId = null;
-  imOwner: boolean = false;
+  userEmail: string;
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
-    private itemsService: ItemsService
-  ) {}
+    private itemsService: ItemsService,
+  ) {
+    let a = localStorage.getItem('user')
+    this.userEmail = JSON.parse(a).email;
+  }
 
   ngOnInit(): void {
     this.retrieveItem(this.categoryId);
     this.message = '';
     console.log(this.Item);
+    console.log();
+    let a = localStorage.getItem('user')
+    this.userEmail = JSON.parse(a).email;
+
+
   }
   ngOnChanges(): void {
     this.message = '';

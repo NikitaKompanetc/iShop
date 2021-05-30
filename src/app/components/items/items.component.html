@@ -19,7 +19,7 @@
       </mat-form-field>
     </div>
     <div>
-      <button mat-raised-button (click)="openDialog()">Basic</button>
+      <button mat-raised-button (click)="openDialog()">Add item</button>
     </div>
   </div>
   <mat-card
@@ -38,7 +38,7 @@
         <p>{{ items.title }}</p>
         <span>{{ items.description }}</span>
       </mat-card-content>
-      <mat-card-actions >
+      <mat-card-actions *ngIf="items.owner === userEmail">
         <button mat-button (click)="openDialogUpdateItem(items.id)">
           <mat-icon>edit</mat-icon>
         </button>

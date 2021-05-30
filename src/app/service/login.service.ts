@@ -1,35 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
-//import 'rxjs/add/operator/switchMap';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from './../model/user.model';
-import { map } from 'rxjs/operators';
-
+import  User from './../model/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddNamesComponent } from '../components/add-names/add-names.component';
+import { Observable } from 'rxjs';
+import { ValidatorFn } from '@angular/forms';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
   userData: any;
-  incomingUser: AngularFirestoreDocument;
-
+  loggingEmail: string;
   private dbPath = '/Users';
 
-  modelUser: AngularFirestoreCollection<User>
+  modelUser: AngularFirestoreCollection<User>;
+  errorMessage: string;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private db: AngularFirestore) {
+    private db: AngularFirestore,
+    private dialog: MatDialog) {
       this.modelUser = this.db.collection(this.dbPath);
-      this.afAuth.authState.subscribe(user => {
+      this.afAuth.authState.subscribe(async user => {
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
           JSON.parse(localStorage.getItem('user'));
+          
+            if (await this.getUserByEmail(user.email)) {
+              this.router.navigateByUrl('/items');
+            }
+        
         } else {
           localStorage.clear();
           JSON.parse(localStorage.getItem('user'));
@@ -39,70 +48,56 @@ export class LoginService {
 
 
 
-    async login(email, password) {
-      this.getUserByEmail(email).subscribe(async el=>{
-        if (el.data()) {
-          await this.afAuth.signInWithEmailAndPassword(email, password)
+    async login(email: string, password: string): Promise<void> {
+        if (await this.getUserByEmail(email)) {
+          return this.afAuth.signInWithEmailAndPassword(email, password)
             .then(value => {
+              this.userData = value
               console.log('Nice, it worked!');
               this.router.navigateByUrl('/items');
             })
             .catch(err => {
               console.log('Something went wrong: ', err.message);
+              throw err
             });
         } else {
-          await this.afAuth.createUserWithEmailAndPassword(email, password)
+          return this.afAuth.createUserWithEmailAndPassword(email, password)
             .then(value => {
               console.log('Success', value);
-              this.router.navigateByUrl('/items');
-              this.SetUserData(value.user);
+              this.openDialog(email);
             })
             .catch(error => {
               console.log('Something went wrong: ', error);
+              throw error
             });
         }
-      })
-  
+
     }
 
-    
 
-    googleLogin() {
+    async googleLogin(): Promise<void> {
       const provider = new firebase.default.auth.GoogleAuthProvider();
       return this.oAuthLogin(provider)
-        .then(value => {
-       console.log('Success', value),
-       this.getUserByEmail(value.user.email).subscribe(async el=>{
-        if (el.data()) {
-          this
-        }});
-       this.router.navigateByUrl('/items');
-       this.SetUserData(value.user)
-      })
-      .catch(error => {
-        console.log('Something went wrong: ', error);
-      });
+        .then(async value => {
+          console.log('Success', value);
+          if (!await this.getUserByEmail(value.user.email)) {
+            this.updateUserData(value.user.email, value.user.displayName.split(' ')[0], value.user.displayName.split(' ')[1]);
+          };
+        })
+        .catch(error => {
+          console.log('Something went wrong: ', error);
+        })
     }
 
 
-    SetUserData(user: firebase.default.User): any {
-      const userData: User = {
-        email: user.email,
-        firstName: '',
-        lastName: '',
-        fullName: ''
-      };
-      return this.modelUser.doc(user.email).set(userData);
-    }
-
-    updateUserData(email, firstName, lastName): any {
+    async updateUserData(email: string, firstName: string, lastName: string): Promise<void> {
       const userData: User = {
         email,
         firstName,
         lastName,
         fullName: firstName + ' ' + lastName,  
       };
-      return this.modelUser.doc(email).set(userData);
+      return await this.modelUser.doc(email).set(userData);
     }
 
     get isLoggedIn(): boolean {
@@ -111,29 +106,17 @@ export class LoginService {
     }
 
 
-    private oAuthLogin(provider) {
-      return this.afAuth.signInWithPopup(provider);
+    private async oAuthLogin(provider: firebase.default.auth.GoogleAuthProvider): Promise<firebase.default.auth.UserCredential> {
+      return await this.afAuth.signInWithPopup(provider);
     }
 
-    getUserByEmail(email: string) {
-      return this.modelUser.doc(email).get()
+    async getUserByEmail(email: string): Promise<User> {
+      return (await this.modelUser.doc(email).get().toPromise()).data();
     }
-    //    ()
-    //     .pipe(
-    //       map((value) => {
-    //         console.log(3333, value);
-            
-    //         value.map((el) => {
-    //           console.log(4444, el);
-              
-    //           return (el.email === email) ? el : null;
-    //         })
-    //       })
-    //     ).subscribe((el) => {
-    //       return el;
-    //     })
-        
-    // }
+
+    openDialog(email: string): void {
+      this.dialog.open(AddNamesComponent, {data: email});
+    }
 
     logout() {
       this.afAuth.signOut().then(() => {
@@ -141,14 +124,4 @@ export class LoginService {
         this.router.navigate(['/']);
       });
     }
-
-    // create(email: string): any {
-    //   const user: User = {
-    //     firstName: '',
-    //     lastName: '',
-    //     fullName: '',
-    //     email
-    //   }
-    //   return this.modelUser.add(user);
-    // }
 }

@@ -5,4 +5,5 @@ export default class Item {
   description?: string;
   published?: boolean;
   categories?: string;
+  owner?: string;
 }

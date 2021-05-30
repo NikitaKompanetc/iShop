@@ -16,6 +16,7 @@ export class AddItemComponent implements OnInit {
   Categories;
   submitted = false;
   form!: FormGroup;
+  userEmail: string;
   constructor(
     public dialogRef: MatDialogRef<AddItemComponent>,
     private itemsService: ItemsService,
@@ -25,10 +26,13 @@ export class AddItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let a = localStorage.getItem('user')
+    this.userEmail = JSON.parse(a).email;
     this.form = this.formBuilder.group({
       categories: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
+      owner: [this.userEmail]
     });
     this.catalogService
       .getAll()

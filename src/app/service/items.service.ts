@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
+  DocumentReference,
 } from '@angular/fire/firestore';
 
 import  Item  from 'src/app/model/item.model';
@@ -15,18 +16,18 @@ export class ItemsService {
   modelItems: AngularFirestoreCollection<Item>;
 
   constructor(private db: AngularFirestore) {
-    this.modelItems = db.collection(this.dbPath);
+    this.modelItems = this.db.collection(this.dbPath);
   }
 
   getAll(): AngularFirestoreCollection<Item> {
     return this.modelItems;
   }
 
-  create(items: any): any {
+  create(items: any): Promise<DocumentReference<Item>> {
     return this.modelItems.add({ ...items });
   }
 
-  update(id: string, data: any): Promise<void> {
+  update(id: string, data: Partial<Item>): Promise<void> {
     return this.modelItems.doc(id).update(data);
   }
 
