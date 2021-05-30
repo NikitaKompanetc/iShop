@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemsService } from './service/items.service';
 import { LoginService } from './service/login.service';
 
 @Component({
@@ -7,7 +8,12 @@ import { LoginService } from './service/login.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    private itemsService: ItemsService
+    ) {
+      this.itemsService.cronJob.start();
+    }
   ngOnInit(): void {}
 
   logout(): void {
