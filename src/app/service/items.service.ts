@@ -4,7 +4,6 @@ import {
   AngularFirestoreCollection,
   DocumentReference,
 } from '@angular/fire/firestore';
-import { CronJob } from 'cron';
 
 import  Item  from 'src/app/model/item.model';
 
@@ -36,21 +35,4 @@ export class ItemsService {
     return this.modelItems.doc(id).delete();
   }
 
-  async deleteAll() {
-    return (await this.getAll().get().toPromise()).forEach(doc => {
-        this.modelItems.doc(doc.id).delete()
-          .catch(err => {
-            console.log(err);
-          })
-      })
-  }
-
-  cronJob = new CronJob('0 1 * * *', () => {
-    try {
-      console.log(23456776543);
-      this.deleteAll();
-    } catch (e) {
-      console.error(e);
-    }
-  });
 }

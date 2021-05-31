@@ -11,9 +11,7 @@ export class AppComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private itemsService: ItemsService
-    ) {
-      this.itemsService.cronJob.start();
-    }
+    ) {}
   ngOnInit(): void {}
 
   logout(): void {
