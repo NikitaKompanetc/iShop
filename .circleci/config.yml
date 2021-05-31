@@ -70,9 +70,9 @@ jobs:
           name: Angular Build
           command: npm run build
       - run:
-          name: Angular Build
-          working_directory: ~/functions
-          command: npm install
+          name: Install Dependencies
+          command: npm run ifunc
+
       - run:
           name: Firebase Deploy
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
