@@ -39,12 +39,14 @@ export class AddNamesComponent implements OnInit {
   }
 
   addName(firstName: string, lastName: string): void {
-    this.loginService.updateUserData(this.email, firstName, lastName)
+    if (firstName.length && lastName.length) {
+      this.loginService.updateUserData(this.email, firstName, lastName)
       .then(() => {
         this.router.navigateByUrl('/items')
           .then(() => {
             this.dialogRef.close();
           });
       });
+    }
   }
 }

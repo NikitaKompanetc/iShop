@@ -3,7 +3,11 @@ import Item from './../../model/item.model';
 import Categories from 'src/app/model/categories.model';
 import { ItemsService } from 'src/app/service/items.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { FirebaseService } from 'src/app/service/categories.service';
 export interface DialogData {
@@ -16,7 +20,7 @@ export interface DialogData {
 })
 export class UpdateItemComponent implements OnInit {
   Item?: Item[];
-  Categories;
+  Categories?: Categories[];
   submitted = false;
   form!: FormGroup;
   currentItemId;
@@ -29,10 +33,7 @@ export class UpdateItemComponent implements OnInit {
     private catalogService: FirebaseService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
-    console.log(data);
-    this.currentItemId  = data;
-
-
+    this.currentItemId = data;
   }
 
   ngOnInit(): void {
@@ -53,7 +54,6 @@ export class UpdateItemComponent implements OnInit {
       )
       .subscribe((data) => {
         this.Categories = data;
-        console.log(data);
       });
   }
 
@@ -78,8 +78,6 @@ export class UpdateItemComponent implements OnInit {
     this.dialogRef.close();
   }
   updateItem(): void {
-    console.log(this.data, this.currentItemId);
-
     if (this.currentItemId) {
       this.itemsService
         .update(this.currentItemId, this.form.getRawValue())

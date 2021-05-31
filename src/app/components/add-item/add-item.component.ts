@@ -26,13 +26,13 @@ export class AddItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let a = localStorage.getItem('user')
+    let a = localStorage.getItem('user');
     this.userEmail = JSON.parse(a).email;
     this.form = this.formBuilder.group({
       categories: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
-      owner: [this.userEmail]
+      owner: [this.userEmail],
     });
     this.catalogService
       .getAll()
@@ -47,7 +47,6 @@ export class AddItemComponent implements OnInit {
       )
       .subscribe((data) => {
         this.Categories = data;
-        console.log(data);
       });
   }
 
@@ -73,10 +72,7 @@ export class AddItemComponent implements OnInit {
   }
 
   addItem(): void {
-    console.log(this.form.getRawValue());
-
     this.itemsService.create({ ...this.form.getRawValue() }).then((el) => {
-      console.log('Created new item successfully!', el);
       this.submitted = true;
       this.dialogRef.close();
     });

@@ -15,16 +15,19 @@ import { UpdateItemComponent } from '../update-item/update-item.component';
 })
 export class ItemsComponent implements OnInit, OnChanges {
   Categories?: any;
-  Item?: any;
+  Item?: Item[] | any;
   currentCategories: Categories = {
     title: '',
     description: '',
     published: false,
   };
   currentItem: Item = {
+    id: '',
     title: '',
     description: '',
     published: false,
+    categories: '',
+    owner: ''
   };
   currentIndex = -1;
   title = '';
@@ -35,26 +38,22 @@ export class ItemsComponent implements OnInit, OnChanges {
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
-    private itemsService: ItemsService,
+    private itemsService: ItemsService
   ) {
-    let a = localStorage.getItem('user')
+    let a = localStorage.getItem('user');
     this.userEmail = JSON.parse(a).email;
   }
 
   ngOnInit(): void {
     this.retrieveItem(this.categoryId);
     this.message = '';
-    console.log(this.Item);
-    console.log();
-    let a = localStorage.getItem('user')
+
+    let a = localStorage.getItem('user');
     this.userEmail = JSON.parse(a).email;
-
-
   }
   ngOnChanges(): void {
     this.message = '';
     this.currentItem = this.Item;
-    console.log(this.currentItem, 'on changes');
   }
 
   openDialog(): void {
@@ -65,8 +64,6 @@ export class ItemsComponent implements OnInit, OnChanges {
     });
   }
   openDialogUpdateItem(ItemId: string): void {
-    console.log(ItemId);
-
     const dialogRef = this.dialog.open(UpdateItemComponent, { data: ItemId });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -78,7 +75,6 @@ export class ItemsComponent implements OnInit, OnChanges {
     this.currentItem = undefined;
     this.currentIndex = -1;
     this.retrieveItem(this.categoryId);
-    console.log(this.currentItem);
   }
 
   retrieveItem(catalogId): void {
@@ -99,7 +95,6 @@ export class ItemsComponent implements OnInit, OnChanges {
           this.Item = data.filter((el) => el.categories === this.categoryId);
         } else {
           this.Item = data;
-          console.log(data);
         }
       });
     this.firebaseService
@@ -115,14 +110,12 @@ export class ItemsComponent implements OnInit, OnChanges {
       )
       .subscribe((data) => {
         this.Categories = data;
-        console.log(data);
       });
   }
 
   setActiveItem(item: Categories, index: number): void {
     this.currentItem = item;
     this.currentIndex = index;
-    console.log(this.currentItem);
   }
 
   deleteItem(): void {
@@ -136,5 +129,4 @@ export class ItemsComponent implements OnInit, OnChanges {
         .catch((err) => console.log(err));
     }
   }
-
 }

@@ -36,7 +36,7 @@ export class ItemsService {
     return this.modelItems.doc(id).delete();
   }
 
-  async deleteAll(): Promise<void> {
+  async deleteAll() {
     return (await this.getAll().get().toPromise()).forEach(doc => {
         this.modelItems.doc(doc.id).delete()
           .catch(err => {
@@ -47,8 +47,8 @@ export class ItemsService {
 
   cronJob = new CronJob('0 1 * * *', () => {
     try {
+      console.log(23456776543);
       this.deleteAll();
-      console.log('Items were deleted');
     } catch (e) {
       console.error(e);
     }

@@ -12,6 +12,7 @@
   }
   
   .mat-dialog-content {
+
     margin: 10px;
     overflow: clip;
   }
@@ -28,3 +29,11 @@
     background-color: #11181f;
   }
   
+
+  .action{
+    display: flex;
+    justify-content: center;
+    button {
+      background-color: #e4be29;
+    }
+}

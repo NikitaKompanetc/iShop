@@ -27,3 +27,7 @@ form.ng-pristine > div {
 ::ng-deep.mat-select-panel {
   background-color: #11181f;
 }
+
+button.mat-raised-button:nth-child(2) {
+  background-color: #e4be29;
+ }

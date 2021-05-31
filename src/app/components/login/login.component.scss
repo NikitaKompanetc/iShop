@@ -7,8 +7,9 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
-  height: 500px;
-  display: flex;
+  min-height: 100vh;
+  height: 100%;
+  padding-bottom: 100px;
 }
 
 .mat-card {
@@ -42,5 +43,4 @@ button.mat-focus-indicator {
 }
 .main-wrapper > h1:nth-child(1) {
   color: #e4be29;
-
 }

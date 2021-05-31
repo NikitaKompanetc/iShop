@@ -7,6 +7,8 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
+  min-height: 100vh;
+  height: 100%;
 }
 .list {
   text-align: left;
@@ -15,6 +17,13 @@
 }
 mat-card > div:nth-child(2) {
   display: flex;
+}
+mat-card.mat-card
+  > div:nth-child(2)
+  > mat-card-content:nth-child(1)
+  > span:nth-child(2) {
+  font-size: 12px;
+  color: gray;
 }
 
 mat-card > div:nth-child(2) > mat-card-content:nth-child(1) > p:nth-child(1) {
@@ -72,4 +81,22 @@ mat-card.mat-card {
 
 .mat-form-field {
   font-size: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .content > div:nth-child(1) > div:nth-child(1) {
+    flex-direction: column;
+  }
+
+  .content > div:nth-child(1) {
+    align-items: center;
+  }
+
+  .content > div:nth-child(1) > div:nth-child(2) {
+    align-content: center;
+    align-items: center;
+  }
+  mat-card.mat-card {
+    min-width: 300px;
+  }
 }
