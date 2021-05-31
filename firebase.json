@@ -1,6 +1,6 @@
 {
   "functions": {
-    "predeploy": "npm --prefix \"functions\" run build"
+    "predeploy": "npm --prefix \"functions\" npm install  run build"
   },
   "hosting": {
     "public": "dist/angularFirebase",
